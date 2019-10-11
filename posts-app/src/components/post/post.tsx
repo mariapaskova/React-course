@@ -6,8 +6,22 @@ const voteText = {
   unvote: "Unvote for this post"
 };
 
-export default class Post extends React.Component {
-  constructor(props) {
+interface IProps {
+  key: number;
+  title: string;
+  tagline: string;
+  votesCount: number;
+}
+
+interface IState {
+  votesCount: number;
+  isHidden: boolean;
+  isVoted: boolean;
+  voteText: string;
+}
+
+export default class Post extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       votesCount: this.props.votesCount,
