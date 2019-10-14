@@ -1,9 +1,9 @@
 import React from "react";
-import "./post.css";
+import "./pizza.css";
 
 const voteText = {
-  vote: "Vote for this post",
-  unvote: "Unvote for this post"
+  vote: "Vote for this pizza",
+  unvote: "Unvote for this pizza"
 };
 
 interface IProps {
@@ -20,7 +20,7 @@ interface IState {
   voteText: string;
 }
 
-export default class Post extends React.Component<IProps, IState> {
+export default class Pizza extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -31,7 +31,7 @@ export default class Post extends React.Component<IProps, IState> {
     };
   }
 
-  hidePost = () => {
+  hide = () => {
     this.setState({
       isHidden: true
     });
@@ -57,14 +57,14 @@ export default class Post extends React.Component<IProps, IState> {
     return (
       <>
         {this.state.isHidden === false && (
-          <div className="post">
+          <div className="listing">
             <button className="vote-btn" onClick={this.voteUnvote}>
               {this.state.voteText}
             </button>
             <div>
               <div className="first-row">
                 <div>{this.props.title}</div>
-                <button className="hide-btn" onClick={this.hidePost}>
+                <button className="hide-btn" onClick={this.hide}>
                   Hide
                 </button>
               </div>

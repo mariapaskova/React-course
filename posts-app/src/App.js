@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import PostPage from "./containers/post-page";
+import ListingsPage from "./containers/listings-page";
 
 function App() {
   return (
     <div className="App">
-      <PostPage></PostPage>
+      <ListingsPage></ListingsPage>
     </div>
   );
 }
