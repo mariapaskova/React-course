@@ -1,4 +1,4 @@
-import React from "./components/pizza/node_modules/react";
+import React from "./components/PizzaList/pizza/node_modules/react";
 import ReactDOM from "react-dom";
 import App from "./App";
 

@@ -1,5 +1,6 @@
 import React from "react";
 import "./pizza.css";
+import Grid from "../grid/grid";
 
 const voteText = {
   vote: "Vote for this pizza",
@@ -55,27 +56,15 @@ export default class Pizza extends React.Component<IProps, IState> {
 
   render() {
     return (
-      <>
-        {this.state.isHidden === false && (
-          <div className="listing">
-            <button className="vote-btn" onClick={this.voteUnvote}>
-              {this.state.voteText}
-            </button>
-            <div>
-              <div className="first-row">
-                <div>{this.props.title}</div>
-                <button className="hide-btn" onClick={this.hide}>
-                  Hide
-                </button>
-              </div>
-              <div className="first-row">
-                <div>{this.props.tagline}</div>
-                <div> Votes:{this.state.votesCount}</div>
-              </div>
-            </div>
-          </div>
-        )}
-      </>
+      <Grid
+        isHidden={this.state.isHidden}
+        voteText={this.state.voteText}
+        votesCount={this.state.votesCount}
+        title={this.props.title}
+        tagline={this.props.tagline}
+        voteUnvote={this.voteUnvote}
+        hide={this.hide}
+      ></Grid>
     );
   }
 }

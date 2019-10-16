@@ -1,8 +1,8 @@
 import React from "react";
-import data from "../pizzasData";
-import Pizza from "../components/pizza/pizza";
+import data from "../../pizzasData";
+import Pizza from "./pizza/pizza";
 
-export default function ListingsPage() {
+export default function List() {
   return (
     <div>
       {data.map(pizza => {
