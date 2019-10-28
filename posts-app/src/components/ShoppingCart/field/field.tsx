@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 const CONTROLS: any = {
   undefined: (props: any) => <input type="text" {...props} />,

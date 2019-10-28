@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Field from "./field/field";
+import "./cart.css";
 
 export default function Cart() {
   const [state, setState] = useState({
@@ -18,6 +19,10 @@ export default function Cart() {
     setState({ ...state, [target.id]: target.value });
   };
 
+  const isValidName = state.name.length < 1 || state.name.length > 3;
+  const isValidPhone = state.phone.length < 1 || state.phone.length > 8;
+  const isValidAddress = state.address.length < 1 || state.address.length > 30;
+
   return (
     <div>
       <form onSubmit={onSubmit}>
@@ -26,9 +31,13 @@ export default function Cart() {
           name="name"
           label="Name"
           value={state.name}
-          control="text"
           onChange={onChange}
         />
+        {isValidName ? null : (
+          <div className="invalid-feedback">
+            Name must be longer than 3 characters
+          </div>
+        )}
         <Field
           id="phone"
           name="phone"
@@ -37,6 +46,11 @@ export default function Cart() {
           value={state.phone}
           onChange={onChange}
         />
+        {isValidPhone ? null : (
+          <div className="invalid-feedback">
+            Phone must be longer than 8 characters
+          </div>
+        )}
         <Field
           id="email"
           name="email"
@@ -53,6 +67,11 @@ export default function Cart() {
           value={state.address}
           onChange={onChange}
         />
+        {isValidAddress ? null : (
+          <div className="invalid-feedback">
+            Address must be longer than 30 characters
+          </div>
+        )}
 
         <input type="submit" value="Submit" />
       </form>
