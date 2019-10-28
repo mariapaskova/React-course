@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Field from "./field/field";
 
 export default function Cart() {
   const [state, setState] = useState({
@@ -9,27 +10,12 @@ export default function Cart() {
   });
 
   const onSubmit = (event: any) => {
-    console.log(event);
+    event.preventDefault();
+    console.log("Submitted form is ", state);
   };
 
-  const onChangeName = ({ target }: any) => {
-    console.log(target, target.value, " Changeee");
-    setState({ ...state, name: target.value });
-  };
-
-  const onChangePhone = ({ target }: any) => {
-    console.log(target, target.value, " Changeee");
-    setState({ ...state, phone: target.value });
-  };
-
-  const onChangeEmail = ({ target }: any) => {
-    console.log(target, target.value, " Changeee");
-    setState({ ...state, email: target.value });
-  };
-
-  const onChangeAddress = ({ target }: any) => {
-    console.log(target, target.value, " Changeee");
-    setState({ ...state, address: target.value });
+  const onChange = ({ target }: any) => {
+    setState({ ...state, [target.id]: target.value });
   };
 
   return (
@@ -40,14 +26,16 @@ export default function Cart() {
           name="name"
           label="Name"
           value={state.name}
-          onChange={onChangeName}
+          control="text"
+          onChange={onChange}
         />
-        {/* <Field
+        <Field
           id="phone"
           name="phone"
           label="Phone"
+          control="text"
           value={state.phone}
-          onChange={onChangePhone}
+          onChange={onChange}
         />
         <Field
           id="email"
@@ -55,7 +43,7 @@ export default function Cart() {
           label="Email"
           control="email"
           value={state.email}
-          onChange={onChangeEmail}
+          onChange={onChange}
         />
         <Field
           id="address"
@@ -63,26 +51,11 @@ export default function Cart() {
           label="Address"
           control="textarea"
           value={state.address}
-          onChange={onChangeAddress}
-        /> */}
+          onChange={onChange}
+        />
 
         <input type="submit" value="Submit" />
       </form>
-    </div>
-  );
-}
-
-function Field({ label, name, control, ...inputProps }: any) {
-  let Control = (props: any) => <input type={control || "text"} {...props} />;
-
-  if (control === "textarea") {
-    Control = props => <textarea {...props} />;
-  }
-
-  return (
-    <div>
-      <label htmlFor={inputProps.id}>{label}: </label>
-      <Control id={name} name={name} {...inputProps} />
     </div>
   );
 }
