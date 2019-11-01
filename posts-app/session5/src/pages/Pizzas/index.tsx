@@ -1,5 +1,5 @@
 import React from 'react';
-import { IPizza, fetchPizzas } from '../../modules/pizzas';
+import { IPizza, fetchPizzas, upvote, downvote } from '../../modules/pizzas';
 import api from '../../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -34,10 +34,31 @@ function PizzaList() {
       {pizzas.map(pizza => {
         return (
           <li key={pizza.id}>
-          <button className="btn btn-primary">{pizza.likes}</button>
-          {pizza.name} (${pizza.price})
+          <VoteButton pizza={pizza}/>
+          {pizza.name} (${pizza.price}) Likes: {pizza.likes}
           </li>)
       })}
     </ul>
+  )
+}
+
+function VoteButton({pizza}: {pizza: IPizza}) {
+  const dispatch = useDispatch();
+
+  if(pizza.viewerLiked) {
+    return (
+      <button 
+        className="btn btn-warning"
+        onClick={() => dispatch(downvote(pizza))}>
+        {pizza.likes}
+      </button>
+    )
+  }
+  return (
+    <button 
+      className="btn btn-primary"
+      onClick={() => dispatch(upvote(pizza))}>
+      {pizza.likes}
+    </button>
   )
 }
