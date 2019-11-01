@@ -6,10 +6,10 @@ export interface IPizza {
   viewerLiked: boolean;
 }
 
-const pizzaFetch = 'pizzas/FETCH'
+const ACTION_FETCH = 'pizzas/FETCH'
 
 export default function pizzasReducer(state = [], action: any) {
-  if(action && action.type === pizzaFetch) {
+  if(action && action.type === ACTION_FETCH) {
     return action.payload;
   }
   return state;
@@ -17,7 +17,7 @@ export default function pizzasReducer(state = [], action: any) {
 
 export function fetchPizzas(pizzas: IPizza[]) {
   return {
-    type: pizzaFetch,
-    paylocas: pizzas
+    type: ACTION_FETCH,
+    payload: pizzas
   }
 }
