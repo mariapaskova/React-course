@@ -2,6 +2,7 @@ import React from 'react';
 import { IPizza, fetchPizzas, upvote, downvote } from '../../modules/pizzas';
 import api from '../../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../../modules/cart';
 
 interface IProps {pizzas: IPizza[]}
 
@@ -18,6 +19,7 @@ export default function Page() {
 
   return <div>  
     <PizzaList/> 
+    <Cart />
   </div> ;
 }
 
@@ -36,6 +38,7 @@ function PizzaList() {
           <li key={pizza.id}>
           <VoteButton pizza={pizza}/>
           {pizza.name} (${pizza.price}) Likes: {pizza.likes}
+          <AddToCart pizza={pizza}/>
           </li>)
       })}
     </ul>
@@ -61,4 +64,42 @@ function VoteButton({pizza}: {pizza: IPizza}) {
       {pizza.likes}
     </button>
   )
+}
+
+function AddToCart({pizza}: {pizza: IPizza}) {
+  const dispatch = useDispatch();
+
+  return (
+    <button
+      className="btn"
+      onClick={() => dispatch(addToCart(pizza))}>
+      Add to Cart
+    </button>
+  )
+}
+
+
+function Cart() {
+  const items = useSelector(getCart);
+
+  return (
+    <>
+      <h2>Cart ({items.length})</h2>
+      <ul>
+        {items.map((item: any) => {
+          return (<li key={item.pizza.id}>
+            {item.pizza.name} = {item.count}
+            ($ {item.pizza.price * item.count})
+          </li>)
+        })}
+      </ul>
+    </>
+  )
+}
+
+function getCart(store: any) {
+  return store.cart.map((item: any) => ({
+    count: item.count,
+    pizza: store.pizzas.find((pizza:any) => pizza.id === item.pizzaId)
+  }))
 }
