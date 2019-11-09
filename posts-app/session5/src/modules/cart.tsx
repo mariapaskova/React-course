@@ -1,4 +1,6 @@
-interface ICartItem {
+import { IPizza } from "./pizzas";
+
+export interface ICartItem {
   pizzaId: string;
   count: number;
 }
@@ -11,7 +13,7 @@ const CART_REMOVE = 'cart/remove';
 export default function cartReducer(state: ICart = [], action: any) {
 
   if(action.type === CART_ADD) {
-    if(state.find(item => item.pizzaId === action.payload)) {
+    if(state.find((item: ICartItem) => item.pizzaId === action.payload)) {
       return state.map(item => 
         item.pizzaId === action.payload 
         ? {
@@ -24,18 +26,33 @@ export default function cartReducer(state: ICart = [], action: any) {
     }
   }
 
+  if(action.type === CART_REMOVE) {
+    if(state.find(item => item.pizzaId === action.payload)) {
+      return state.map((item: ICartItem) => 
+        item.pizzaId === action.payload && item.count > 0
+        ? {
+          ...item,
+          count: item.count - 1
+        } 
+        : item)
+        .filter((item: ICartItem) => item.count > 0);
+    } else {
+      return [...state]
+    }
+  }
+
   return state;
 }
 
 
-export function addToCart (pizza: any) {
+export function addToCart (pizza: IPizza) {
   return {
     type: CART_ADD,
     payload: pizza.id
   }
 }
 
-export function removeFtomToCart (pizza: any) {
+export function removeFromCart (pizza: IPizza) {
   return {
     type: CART_REMOVE,
     payload: pizza.id

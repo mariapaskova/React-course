@@ -2,7 +2,7 @@ import React from 'react';
 import { IPizza, fetchPizzas, upvote, downvote } from '../../modules/pizzas';
 import api from '../../utils/api';
 import { useDispatch, useSelector } from 'react-redux';
-import { addToCart } from '../../modules/cart';
+import { addToCart, removeFromCart } from '../../modules/cart';
 
 interface IProps {pizzas: IPizza[]}
 
@@ -71,9 +71,20 @@ function AddToCart({pizza}: {pizza: IPizza}) {
 
   return (
     <button
-      className="btn"
+      className="btn btn-primary"
       onClick={() => dispatch(addToCart(pizza))}>
       Add to Cart
+    </button>
+  )
+}
+
+function RemoveFromCart({pizza}: {pizza: IPizza}) {
+  const dispatch = useDispatch();
+  return (
+    <button
+      className="btn btn-secondary"
+      onClick={() => dispatch(removeFromCart(pizza))}>
+      Remove from Cart
     </button>
   )
 }
@@ -86,12 +97,11 @@ function Cart() {
     <>
       <h2>Cart ({items.length})</h2>
       <ul>
-        {items.map((item: any) => {
-          return (<li key={item.pizza.id}>
-            {item.pizza.name} = {item.count}
-            ($ {item.pizza.price * item.count})
-          </li>)
-        })}
+        {items.map((item: {count: number, pizza: IPizza}) => (<li key={item.pizza.id}>
+          {item.pizza.name} = {item.count}
+          ($ {item.pizza.price * item.count})
+          <RemoveFromCart pizza={item.pizza} />
+        </li>))}
       </ul>
     </>
   )
